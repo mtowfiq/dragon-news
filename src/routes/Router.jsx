@@ -1,9 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
+import HomeLayouts from "../Layouts/HomeLayouts";
 
-const Router = createBrowserRouter([
+const router = createBrowserRouter([
     {
         path: "/",
-        element: <h1>Home</h1>
+        element: <HomeLayouts></HomeLayouts>
     },
     {
         path: "/news",
@@ -19,4 +20,4 @@ const Router = createBrowserRouter([
     }
 ])
 
-export default Router;
+export default router;
