@@ -1,10 +1,22 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import HomeLayouts from "../Layouts/HomeLayouts";
+import CategoryNews from "../Pages/CategoryNews";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <HomeLayouts></HomeLayouts>
+        element: <HomeLayouts></HomeLayouts>,
+        children: [
+            {
+                path: "/",
+                element: <Navigate to={"/category/01"}></Navigate>
+            },
+            {
+                path: "/category/:id",
+                element: <CategoryNews></CategoryNews>,
+                loader: ({params}) => fetch(`https://openapi.programming-hero.com/api/news/category/${params.id}`)
+            }
+        ]
     },
     {
         path: "/news",
