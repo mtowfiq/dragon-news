@@ -1,29 +1,39 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
 
 const Register = () => {
-  const {createUser, setUser} = useContext(AuthContext)
+  const {createUser, setUser, updateUserProfile} = useContext(AuthContext)
+  const {nameError, setNameError} = useState({})
+  const navigate = useNavigate()
 
   const handleSubmit = (e) =>{
     e.preventDefault()
 
     const name = e.target.name.value
+
     const password = e.target.password.value
     const email = e.target.email.value
     const photo = e.target.photo.value
 
-    console.log(name, photo, password, email)
+    // console.log(name, photo, password, email)
     
     // Creating user
     createUser(email, password)
     .then(result =>{
       setUser(result.user)
-      console.log(result.user)
+      // console.log(result.user)
+      updateUserProfile({displayName: name, photoURL: photo})
+      .then(()=>{
+        navigate("/")
+      })
+      .catch(err=>{
+        // console.log(err.code)
+      })
       e.target.reset()
     })
-    .catch(error =>{
-      console.log("Error is", error.message)
+    .catch(err =>{
+      // console.log("Err is", err.message)
     })
   }
   return (
@@ -44,6 +54,7 @@ const Register = () => {
                     placeholder="Enter your name"
                     name="name"
                   />
+  
                   <label className="label">Photo URL</label>
                   <input
                     name="photo"

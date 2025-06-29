@@ -10,23 +10,30 @@ const Navbar = () => {
     const handleLogout = () =>{
         logOut()
         .then(() =>{
-            console.log("Logout successful")
+            // console.log("Logout successful")
         })
         .catch(err =>{
-            console.log(err.message)
+            // console.log(err.message)
         })
     }
 
     return (
         <div className='flex justify-between items-center'>
-            <div className="">{user && user?.email}</div>
+            <div className="">{user && user?.displayName}</div>
             <div className="nav space-x-5">
                 <Link to="/">Home</Link>
                 <Link to="/career">Career</Link>
                 <Link to="/about">About</Link>
             </div>
             <div className="login flex gap-2 items-center">
-                <img src={userIcon} alt="" />
+                {
+                    user && user?.email ? (
+                        <div>
+                            <img className='w-[90px] rounded-xl' src={user?.photoURL} alt="" />
+                        </div>
+
+                    ) : (<img src={userIcon} alt="" />)
+                }
                 {
                     user ? (<button onClick={handleLogout} className='btn btn-neutral'>Logout</button>) : (<Link to="/auth/login" className='btn btn-neutral'>Login</Link>)
                 }
